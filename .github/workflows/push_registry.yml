@@ -1,0 +1,35 @@
+name: BUild and Push to Registry
+on:
+  workflow_dispatch:
+    inputs:
+      dir:
+        type: string
+        required: true
+        description: 'Target build dirctory'
+      
+
+env:
+  TARGET_DIRECTORY: ${{ github.event.inputs.dir }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build Docker Image
+        run: |
+          cd src/${{ env.TARGET_DIRECTORY }} &&
+          docker build --tag ghcr.io/$GITHUB_ACTOR/docker_chrome:${{ env.TARGET_DIRECTORY }} \
+          .
+        
+      - name: Push Docker Image
+        run: |
+          docker build ghcr.io/$GITHUB_ACTOR/docker_chrome:${{ env.TARGET_DIRECTORY }}
