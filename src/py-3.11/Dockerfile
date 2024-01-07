@@ -8,3 +8,7 @@ RUN apt install -y google-chrome-stable
 
 # set display port to avoid crash
 ENV DISPLAY=:99
+
+# innstall selenium
+COPY requirements.txt /tmp/
+RUN pip install -r /tmp/requirements.txt --no-cache-dir

@@ -1,2 +1,2 @@
 # docker_chrome
-chromeを内包したdocker image
+chromeとseleniumを内包した動作確認済みのdocker image
