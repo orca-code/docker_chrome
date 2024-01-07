@@ -1,4 +1,4 @@
-name: BUild and Push to Registry
+name: Build and Push to Registry
 on:
   workflow_dispatch:
     inputs:
@@ -32,4 +32,4 @@ jobs:
         
       - name: Push Docker Image
         run: |
-          docker build ghcr.io/$GITHUB_ACTOR/docker_chrome:${{ env.TARGET_DIRECTORY }}
+          docker push ghcr.io/$GITHUB_ACTOR/docker_chrome:${{ env.TARGET_DIRECTORY }}
